@@ -208,44 +208,52 @@ export default function OffersPage() {
     `Prosofora-${o.number.replace(/\s/g, "-")}.pdf`;
 
   const downloadOfferPdf = async (o: Offer) => {
-    const { jsPDF } = await import("jspdf");
-    const doc = new jsPDF({ unit: "mm", format: "a4" });
-    const margin = 20;
-    let y = 20;
+    try {
+      const jspdfMod = await import("jspdf");
+      const JsPDF = jspdfMod.jsPDF ?? jspdfMod.default;
+      if (!JsPDF) throw new Error("jsPDF not found");
+      const doc = new JsPDF({ unit: "mm", format: "a4" });
+      const margin = 20;
+      let y = 20;
 
-    doc.setFontSize(18);
-    doc.text("NOVA APOLYMANTIKI", margin, y);
-    y += 8;
-    doc.setFontSize(11);
-    doc.setTextColor(100, 116, 139);
-    doc.text("Prosofora", margin, y);
-    y += 12;
-    doc.setTextColor(15, 23, 42);
-
-    const col1 = 45;
-    const line = (label: string, value: string) => {
-      doc.setFont("helvetica", "normal");
-      doc.setFontSize(10);
-      doc.setTextColor(71, 85, 105);
-      doc.text(label, margin, y);
+      doc.setFontSize(18);
+      doc.text("NOVA APOLYMANTIKI", margin, y);
+      y += 8;
+      doc.setFontSize(11);
+      doc.setTextColor(100, 116, 139);
+      doc.text("Prosofora", margin, y);
+      y += 12;
       doc.setTextColor(15, 23, 42);
-      const lines = doc.splitTextToSize(value, 120);
-      doc.text(lines, margin + col1, y);
-      y += Math.max(8, lines.length * 5 + 2);
-    };
 
-    line("Arithmos:", o.number);
-    line("Pelatis:", o.customer);
-    line("Imerominia:", o.date);
-    line("Ypiresies:", o.servicesLabel ?? "—");
-    line("Syxnotita:", o.frequency ?? "—");
-    line("Katastasi:", o.status);
-    y += 4;
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(12);
-    line("Synolo:", o.total);
+      const col1 = 45;
+      const line = (label: string, value: string) => {
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(10);
+        doc.setTextColor(71, 85, 105);
+        doc.text(label, margin, y);
+        doc.setTextColor(15, 23, 42);
+        const lines = typeof doc.splitTextToSize === "function" ? doc.splitTextToSize(value, 120) : [value];
+        const lineArr = Array.isArray(lines) ? lines : [String(lines)];
+        doc.text(lineArr, margin + col1, y);
+        y += Math.max(8, lineArr.length * 5 + 2);
+      };
 
-    doc.save(getOfferPdfFilename(o));
+      line("Arithmos:", o.number);
+      line("Pelatis:", o.customer);
+      line("Imerominia:", o.date);
+      line("Ypiresies:", o.servicesLabel ?? "—");
+      line("Syxnotita:", o.frequency ?? "—");
+      line("Katastasi:", o.status);
+      y += 4;
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(12);
+      line("Synolo:", o.total);
+
+      doc.save(getOfferPdfFilename(o));
+    } catch (err) {
+      console.error(err);
+      alert("Σφάλμα δημιουργίας PDF. Εκτελέστε npm install και δοκιμάστε ξανά, ή χρησιμοποιήστε Εκτύπωση και «Αποθήκευση ως PDF».");
+    }
   };
 
   const handleSend = async (o: Offer) => {
