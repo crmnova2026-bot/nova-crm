@@ -28,7 +28,7 @@ export const metadata: Metadata = {
 const navItems = [
   { href: "/", label: "Πίνακας Ελέγχου", icon: LayoutDashboard },
   { href: "/customers", label: "Πελάτες", icon: Users },
-  { href: "/υπηρεσιες", label: "Υπηρεσίες", icon: Wrench },
+  { href: "/services", label: "Υπηρεσίες", icon: Wrench },
   { href: "/προσφορες", label: "Προσφορές", icon: FileText },
   { href: "/ρυθμισεις", label: "Ρυθμίσεις", icon: Settings },
 ];
