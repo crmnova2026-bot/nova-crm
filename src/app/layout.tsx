@@ -8,6 +8,7 @@ import {
   FileText,
   Settings,
 } from "lucide-react";
+import { CustomersProvider } from "../context/CustomersContext";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -29,7 +30,7 @@ const navItems = [
   { href: "/", label: "Πίνακας Ελέγχου", icon: LayoutDashboard },
   { href: "/customers", label: "Πελάτες", icon: Users },
   { href: "/services", label: "Υπηρεσίες", icon: Wrench },
-  { href: "/προσφορες", label: "Προσφορές", icon: FileText },
+  { href: "/offers", label: "Προσφορές", icon: FileText },
   { href: "/ρυθμισεις", label: "Ρυθμίσεις", icon: Settings },
 ];
 
@@ -43,6 +44,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex min-h-screen bg-slate-50 text-slate-900`}
       >
+        <CustomersProvider>
         <aside className="w-64 flex-shrink-0 bg-slate-900 text-white">
           <div className="flex h-full flex-col p-4">
             <div className="mb-8 border-b border-slate-700 pb-4">
@@ -65,6 +67,7 @@ export default function RootLayout({
           </div>
         </aside>
         <main className="flex-1 overflow-auto p-6">{children}</main>
+        </CustomersProvider>
       </body>
     </html>
   );

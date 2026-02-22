@@ -12,9 +12,12 @@ type Service = {
 };
 
 const mockServices: Service[] = [
-  { id: "1", name: "Απολύμανση χώρου", code: "APO-01", price: "150,00 €", status: "Ενεργή" },
-  { id: "2", name: "Εντομοκτόνος", code: "ENT-01", price: "80,00 €", status: "Ενεργή" },
-  { id: "3", name: "Καθαρισμός αεραγωγών", code: "KAT-01", price: "200,00 €", status: "Ανενεργή" },
+  { id: "1", name: "Απεντόμωση", code: "APE-01", price: "—", status: "Ενεργή" },
+  { id: "2", name: "Μυοκτονία", code: "MYO-01", price: "—", status: "Ενεργή" },
+  { id: "3", name: "Απεντόμωση & Μυοκτονία", code: "APE-MYO-01", price: "—", status: "Ενεργή" },
+  { id: "4", name: "Απεντόμωση ξυλοφάγα έντομα", code: "APE-02", price: "—", status: "Ενεργή" },
+  { id: "5", name: "Θερμική απεντόμωση", code: "THE-01", price: "—", status: "Ενεργή" },
+  { id: "6", name: "Μικροβιακή απολύμανση", code: "MIK-01", price: "—", status: "Ενεργή" },
 ];
 
 const initialForm = {

@@ -2,20 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { Plus, Search, X } from "lucide-react";
-
-type Customer = {
-  id: string;
-  title: string;
-  afm: string;
-  phone: string;
-  status: "Ενεργός" | "Ανενεργός";
-};
-
-const mockCustomers: Customer[] = [
-  { id: "1", title: "Επιχείρηση Α", afm: "123456789", phone: "210 1234567", status: "Ενεργός" },
-  { id: "2", title: "Εταιρεία Β", afm: "987654321", phone: "210 7654321", status: "Ανενεργός" },
-  { id: "3", title: "Όμιλος Γ", afm: "111222333", phone: "231 1112233", status: "Ενεργός" },
-];
+import { useCustomers } from "../../context/CustomersContext";
 
 const initialForm = {
   date: new Date().toISOString().slice(0, 10),
@@ -28,10 +15,10 @@ const initialForm = {
 };
 
 export default function CustomersPage() {
+  const { customers, addCustomer } = useCustomers();
   const [search, setSearch] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const [form, setForm] = useState(initialForm);
-  const [customers, setCustomers] = useState<Customer[]>(mockCustomers);
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
@@ -56,16 +43,12 @@ export default function CustomersPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setCustomers((prev) => [
-      ...prev,
-      {
-        id: String(prev.length + 1),
-        title: form.title,
-        afm: form.afm,
-        phone: form.phone,
-        status: "Ενεργός",
-      },
-    ]);
+    addCustomer({
+      title: form.title,
+      afm: form.afm,
+      phone: form.phone,
+      status: "Ενεργός",
+    });
     closeModal();
   };
 
