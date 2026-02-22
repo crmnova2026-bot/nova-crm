@@ -5,6 +5,7 @@ import {
   LayoutDashboard,
   Users,
   Wrench,
+  Package,
   FileText,
   Settings,
 } from "lucide-react";
@@ -30,6 +31,7 @@ const navItems = [
   { href: "/", label: "Πίνακας Ελέγχου", icon: LayoutDashboard },
   { href: "/customers", label: "Πελάτες", icon: Users },
   { href: "/services", label: "Υπηρεσίες", icon: Wrench },
+  { href: "/products", label: "Προϊόντα", icon: Package },
   { href: "/offers", label: "Προσφορές", icon: FileText },
   { href: "/ρυθμισεις", label: "Ρυθμίσεις", icon: Settings },
 ];
